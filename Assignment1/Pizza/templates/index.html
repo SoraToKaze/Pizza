@@ -3,20 +3,42 @@
 
 {% block content %}
 <div class="homepage">
-    <h1>
-        <br>
-        <br>
-        <br>
-            <div class="home_index">
+    <div class="home_index">
+        <div>
             <h1>HeHe Pizza</h1>
-            <h2 div class = "home_index_2">Pizza, done right</h2>
+            Pizza, done right
 
-            {% if user.is_authenticated %}
-                <a href="/order"><button class="btn">Order Now!</a>
-            {% else %}
-                <a href='/register'><button class="btn">Create Account!</a>
-            {% endif %}
-
-    </h1>
+            <br>
+        </div>
+        <div class="home_buttons">
+            <div>
+                {% if user.is_authenticated %}
+                Currently logged in as {{ user.username }}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="home_buttons">
+            <div>
+                {% if user.is_authenticated %}
+                <div class="home_button">
+                    <a href='/order'><button class="home_button">Order Now!</button></a>
+                </div>
+                {% else %}
+                    <a href='/signup'><button class="home_button">Create account</button></a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- {% if user.is_authenticated %}
+        Currently logged in as {{ user.username }}
+        <br />
+        <br />
+        <div class="home_button">
+            <a href="/order">Order Now!</a>
+        </div>
+        {% else %}
+            <a href='/signup'><button class="btn">Create Account!</a>
+        {% endif %} -->
+    </div>
 </div>
 {% endblock %}
