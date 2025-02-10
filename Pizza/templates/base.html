@@ -1,0 +1,38 @@
+<html>
+    {% load static %}
+    <link rel="icon" href=static/images/pizza.png>
+    <!--<link rel="stylesheet" href=static/css/css1.css>-->
+    
+    <head>
+        <meta charset="UTF-8">
+        <div class="start">
+        <title>HeHe Pizza</title>
+        </div>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+        <!--Navbar Section-->
+        <div class="navbar">
+            <ul>
+                <li><a class='logo' href='/'>HeHe Pizza</a></li>
+                <li><a href='/order'>Order</a></li>
+                <li><a href='/logout'>Logout</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="navbar">
+            <ul>
+                <li><a class='logo' href='/'>HeHe Pizza</a></li>
+                <li><a href='/login'>Login</a></li>
+                <li><a href='/register'>Register</a></li>
+            </ul>
+        {% endif %}
+        
+        {% block content %}
+        
+        {% endblock %}
+    </body>
+    <footer>
+        <p>&copy; 2025 HeHe Pizza. All Rights Reserved</p>
+    </footer>
+</html>
