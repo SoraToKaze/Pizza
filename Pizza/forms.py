@@ -35,9 +35,32 @@ class LoginForm(AuthenticationForm):
 class PizzaForm(forms.ModelForm):
     class Meta:
         model = Pizza
-        fields = ["size", "crust", "sauce", "cheese", "toppings"]
+        fields = ['size', 'crust', 'sauce', 'cheese', 'toppings']
+        widgets = {
+            'toppings': forms.CheckboxSelectMultiple,
+        }
 
 class DeliveryForm(forms.ModelForm):
     class Meta:
         model = Delivery
-        fields = ["name","address", "card_number", "Exp_month", "Exp_year", "CVV"]
+        fields = ["name","address", "cardNo", "Month", "Year", "cvv"]
+        
+"""""
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['pizza', 'toppings', 'customer_name', 'customer_address', 'customer_phone']
+        widgets = {
+            'pizza': forms.Select(attrs={'class': 'form-control'}),
+            'toppings': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'customer_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_address': forms.Textarea(attrs={'class': 'form-control'}),
+            'customer_phone': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Customize the pizza field to include crust, size, and sauce
+        self.fields['pizza'].label_from_instance = lambda obj: f"{obj.name} ({obj.size}, {obj.crust}, {obj.sauce})"
+
+"""
