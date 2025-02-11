@@ -1,25 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class PizzaSizes(models.Model):
+class PizzaToppings(models.Model):
+    topping = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.topping
+
+class Sizes(models.Model):
     size = models.CharField(max_length=20)
 
     def __str__(self):
         return self.size
 
-class PizzaCrust(models.Model):
+class Crust(models.Model):
     crust = models.CharField(max_length=20)
 
     def __str__(self):
         return self.crust
 
-class PizzaCheese(models.Model):
+class Cheese(models.Model):
     cheese = models.CharField(max_length=20)
 
     def __str__(self):
         return self.cheese
 
-class PizzaSauce(models.Model):
+class Sauce(models.Model):
     sauce = models.CharField(max_length=20)
 
     def __str__(self):
@@ -28,18 +34,24 @@ class PizzaSauce(models.Model):
 
 ######################## PIZZA MODEL
 class Pizza(models.Model):
+    # All customisation options will be done through the admin panel
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    size = models.ForeignKey(PizzaSizes, on_delete=models.CASCADE)
-    crust = models.ForeignKey(PizzaCrust, on_delete=models.CASCADE)
-    sauce = models.CharField(PizzaSauce, on_delete=models.CASCADE)
-    cheese = models.CharField(PizzaCheese, on_delete=models.CASCADE)
-    toppings = models.ManyToManyField()
+    size = models.ForeignKey(Sizes, on_delete=models.CASCADE)
+    crust = models.ForeignKey(Crust, on_delete=models.CASCADE)
+    sauce = models.CharField(Sauce, on_delete=models.CASCADE)
+    cheese = models.CharField(Cheese, on_delete=models.CASCADE)
+    toppings = models.ManyToManyField(PizzaToppings, through='PizzaToppingsChoices')
     
-    # Automatically set the order date when the pizza is created.
+    # Automatically set the date to the current date and time when the object is created.
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
         return f"Pizza by {self.author.username} on {self.date.strftime('%Y-%m-%d')}"
+    
+    
+class PizzaToppingsChoices(models.Model):
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    topping = models.ForeignKey(PizzaToppings, on_delete=models.CASCADE, related_name='topping')
 
 ############# DELIVERY CONFIG
 
@@ -66,12 +78,10 @@ class Delivery(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
-    # For card numbers, consider using a CharField if you need to preserve leading zeros.
     cardNo = models.IntegerField()
     expMonth = models.CharField(max_length=15, choices=MONTH_CHOICES, default='January')
     expYear = models.IntegerField(choices=YEAR_CHOICES, default=2025)
-    # IntegerField does not support max_length; if you need fixed-length, consider CharField.
-    cvv = models.CharField(max_length=3)
+    cvv = models.CharField(max_length=4)
 
     def __str__(self):
         return f"Delivery for {self.name} by {self.author.username}"
