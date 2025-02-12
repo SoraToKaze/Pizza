@@ -4,7 +4,7 @@ from .forms import *
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('logout/', views.logout_view, name='logout'),
-    path('login', views.login_view, name='login'),
-    path('signup', views.signup, name='register'),
+    path('', views.logout_view, name='logout'),
+    path('login/', views.UserLoginForm.as_view, name='login'),
+    path('register/', views.signup, name='register'),
 ]

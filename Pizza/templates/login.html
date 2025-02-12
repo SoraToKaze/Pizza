@@ -1,27 +1,28 @@
 <html>
     {% load static %}
     <link rel="icon" href=static/images/pizza.png>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{% static 'css/css.css' %}">
-</head>
-<body>
 
-    <div class="form-box">
-        <h1>Login</h1>
-        <form method="POST" class="form-group">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn-submit">Login</button>
-        </form>
-        <section>
-            <p>Don't have an account? <a href="/register">Register</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    </head>
 
-            </a>
-        </section>
-    </div>
+    <body>
+        <div class="form-box">
+            <h1>Login</h1>
+            <form method="POST" class="form-group">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+            <section>
+                <p>Don't have an account? <a href="/register">Register</p>
 
-</body>
+                </a>
+            </section>
+        </div>
+
+    </body>
 </html>

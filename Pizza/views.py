@@ -12,12 +12,12 @@ def index(request):
 
 def signup(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             login(request, form.save())
             return redirect("order.html")
     else:
-        form = RegisterForm()
+        form = SignUpForm()
     return render(request, "register.html", {"form":form})
 
 class UserLoginForm(LoginView):
