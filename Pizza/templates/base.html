@@ -14,8 +14,9 @@
 
             <div class="navbar_gap"></div>
 
-            <div class="navbar_link"><a href="/logout">Logout</a></div>
-        </div>
+            <div class="navbar_link">
+                <a href="/logout">Logout</a></div>
+            </div>
         {% else %}
 
         <div class="navbar">
@@ -30,16 +31,12 @@
             <div class="navbar_link"><a href="/signup">Signup</a></div>
 
         </div>
-        <!-- <div class="navbar">
-            <ul>
-                <li><a class='logo' href='/'>HeHe Pizza</a></li>
-                <li><a href='/login'>Login</a></li>
-                <li><a href='/signup'>Register</a></li>
-            </ul>
-        </div> -->
         {% endif %}
         
         {% block content %}
         {% endblock %}
     </body>
+    <footer>
+        © 2025 Hehe Pizza. All Rights Reserved
+    </footer>
 </html>

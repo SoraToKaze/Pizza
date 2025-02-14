@@ -1,5 +1,6 @@
-<html>
-    {% load static %}
+{% extends 'base.html'%}
+
+{% load static %}
     <link rel="icon" href=static/images/pizza.png>
 
     <head>
@@ -8,8 +9,7 @@
         <title>Login</title>
         <link rel="stylesheet" href="{% static 'css/css.css' %}">
     </head>
-
-    <body>
+    
         <div class="form-box">
             <h1>Login</h1>
             <form method="POST" class="form-group">
@@ -23,6 +23,3 @@
                 </a>
             </section>
         </div>
-
-    </body>
-</html>
