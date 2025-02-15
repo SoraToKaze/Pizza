@@ -37,7 +37,7 @@ class Pizza(models.Model):
     sauce =    models.CharField (max_length=20, choices=sauce,  default='Tomato')
     cheese =   models.CharField (max_length=20, choices=cheese, default='Mozzarella')
     toppings = models.ManyToManyField(PizzaToppings)
-    date = models.DateTimeField(auto_now_add=True, blank=True)
+    date =     models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
         

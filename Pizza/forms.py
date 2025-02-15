@@ -2,8 +2,6 @@ from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from crispy_forms.layout import Layout, Submit
-from crispy_forms.helper import FormHelper
 
 class RegisterForm(UserCreationForm):
     class Meta:
