@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator, MaxLengthValidator, RegexValidator
 
-
 class PizzaSizes(models.Model):
     size = models.CharField(max_length=20)
 
@@ -14,7 +13,6 @@ class PizzaCheese(models.Model):
 
 class PizzaToppings(models.Model):
     top = models.CharField(max_length=30)
-    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.50)
     
 class PizzaCrust(models.Model):
     crust = models.Charfield(max_length=20)
@@ -43,8 +41,7 @@ class Pizza(models.Model):
 
     def __str__(self):
         
-        return f"{self.size} pizza with {self.crust} crust, {self.sauce} sauce, {self.cheese} cheese, and{self.toppings} at {self.date}"
-    
+        return f"{self.size} pizza with {self.crust} crust, {self.sauce} sauce, {self.cheese} cheese, and{self.toppings} at {self.date.strftime('%Y-%m-%d')}"
 MONTH_CHOICES = tuple((month, month) for month in range(1, 12))
 YEAR_CHOICES = tuple((year, year) for year in range(2025, 2050))
 
@@ -75,3 +72,13 @@ class Delivery(models.Model):
     def __str__(self):
         return f"Delivery for {self.name} by {self.author.username}"
 
+
+class Confirm_Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    delivery = models.ForeignKey(Delivery, on_delete=models.CASCADE)
+    create_time = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Order #{self.id} by {self.user.username}"
+    

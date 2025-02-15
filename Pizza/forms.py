@@ -8,13 +8,11 @@ from crispy_forms.helper import FormHelper
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ["username", "email", "first_name", "last_name", "password1", "password2"]
+        fields = ["username", "email", "password1", "password2"]
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
-        user.first_name = self.cleaned_data["first_name"]
-        user.last_name = self.cleaned_data["last_name"]
         if commit:
             user.save()
         return user
@@ -30,3 +28,30 @@ class DeliveryForm(forms.Form):
     class Meta:
         model = Delivery
         fields = ['name', 'address', 'cardNo', 'expiryMonth', 'expYear', 'cvv']
+
+        widgets = {
+            'card_number': forms.NumberInput(attrs={
+                'placeholder': 'XXXX-XXXX-XXXX-XXXX',
+                'minlength': 16,
+                'maxlength': 16,
+            }),
+
+            'expiryMonth': forms.NumberInput(attrs={
+                'placeholder': 'MM',
+                'min': 1,
+                'max': 12,
+            }),
+
+            'expYear': forms.NumberInput(attrs={
+                'placeholder': 'YY',
+                'min': 0,
+                'max': 99,
+            }),
+            
+            'cvv': forms.TextInput(attrs={
+                'placeholder': 'CVV',
+                'min': 0,
+                'max': 999,
+            }),
+        }
+
