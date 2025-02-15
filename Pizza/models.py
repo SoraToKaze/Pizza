@@ -15,7 +15,7 @@ class PizzaToppings(models.Model):
     top = models.CharField(max_length=30)
     
 class PizzaCrust(models.Model):
-    crust = models.Charfield(max_length=20)
+    crust = models.CharField(max_length=20)
     
 item1 = PizzaSizes.objects.all()
 sizes = tuple((item.size, item.size) for item in item1)
