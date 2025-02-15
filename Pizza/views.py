@@ -1,11 +1,10 @@
 from django.shortcuts               import render, redirect
-from django.contrib.auth.views      import LoginView
 from django.contrib.auth            import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib                 import messages
 from .models                        import *
 from .forms                         import *
-
+from django.contrib.auth.forms      import AuthenticationForm
 def index(request):
     return render(request, 'index.html')
 
@@ -20,7 +19,7 @@ def register(request):
         form = RegisterForm()
     return render(request, "register.html", {"form":form})
 
-class UserLoginView(LoginView):
+class UserLoginView(AuthenticationForm):
     pass
 
 def login(request):
@@ -63,7 +62,7 @@ def create(request):
     return render(request, "/create.html", {'form':form})
 
 @login_required(login_url='index')
-def confirmation(request):
+def delivery(request):
     pizza_id = request.session.get('pending_pizza_id')
     if not pizza_id:
         messages.error(request, 'You must create a pizza first') 
@@ -73,3 +72,12 @@ def confirmation(request):
         if form.is_valid():
             delivery = form.save(commit=False)
             delivery.author = request.user
+            pizza = Pizza.objects.get(id=pizza_id)
+            delivery.pizza = pizza
+            delivery.save()
+            del request.session['pending_pizza_id']
+            messages.success(request, 'Order placed successfully, We will deliver your pizza soon!')
+            return redirect('/index')
+    else:
+        form = DeliveryForm()
+    return render(request, 'delivery.html', {'form': form})
