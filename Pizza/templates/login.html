@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 
-{% load static %}
+<html>
+    {% load static %}
     <link rel="icon" href=static/images/pizza.png>
 
     <head>
@@ -9,13 +10,15 @@
         <title>Login</title>
         <link rel="stylesheet" href="{% static 'css/css.css' %}">
     </head>
+        {% block content %}
     <body>
+
         <div class="form-box">
             <h1>Login</h1>
             <form method="POST" class="form-group">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn-submit">Log In</button>
+                <button type="submit" class="btn-submit">Login</button>
             </form>
             <section>
                 <p>Don't have an account? <a href="/register">Register</p>
@@ -23,4 +26,7 @@
                 </a>
             </section>
         </div>
+
     </body>
+    {% endblock %}
+</html>

@@ -2,21 +2,21 @@
     {% load static %}
     <link rel="stylesheet" href=static/css/css1.css>
     <link rel="icon" href=static/images/pizza.png><link rel="icon" href=static/images/pizza.png>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hehe Pizza</title>
+    </head>
     <body>
         {% if user.is_authenticated %}
 
         <div class="navbar">
-
-            <div class="navbar_box">
-                Hehe Pizza
-            </div>
-
-            <div class="navbar_gap"></div>
-
-            <div class="navbar_link">
-                <a href="/logout">Logout</a></div>
-            </div>
+            Hehe Pizza
+        <br>
+        <div class="navbar_link"><a href="/create">Order Now</a></div>    
+        <div class="navbar_link"><a href='/history_orders'>History Orders</a></div>
+        <div class="navbar_link"><a href="/logout">Logout</a></div>
+        </div>
         {% else %}
 
         <div class="navbar">

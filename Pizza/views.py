@@ -12,10 +12,9 @@ def index(request):
 def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
-        
         if form.is_valid():
             form.save()
-            return redirect("/login")
+            return redirect("/")
     else:
         form = RegisterForm()
     return render(response, "register.html", {"form":form})
@@ -25,7 +24,7 @@ class UserLoginForm(AuthenticationForm):  # Add this class
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')

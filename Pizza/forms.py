@@ -14,12 +14,7 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
-class LoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super(LoginForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Username'})
-        self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
-        
+
 class PizzaForm(forms.ModelForm):
     class Meta:
         model = Pizza
@@ -34,7 +29,7 @@ class DeliveryForm(forms.Form):
         fields = ['name', 'address', 'cardNo', 'expiryMonth', 'expYear', 'cvv']
 
         widgets = {
-            'card_number': forms.NumberInput(attrs={
+            'cardNo': forms.NumberInput(attrs={
                 'placeholder': 'XXXX-XXXX-XXXX-XXXX',
                 'minlength': 16,
                 'maxlength': 16,
