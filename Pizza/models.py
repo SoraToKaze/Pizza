@@ -18,25 +18,13 @@ class PizzaToppings(models.Model):
 class PizzaCrust(models.Model):
     crust = models.CharField(max_length=20)
     
-item1 = PizzaSizes.objects.all()
-sizes = tuple((item.size, item.size) for item in item1)
-
-item2 = PizzaSauce.objects.all()
-sauce = tuple((item.sauce, item.sauce) for item in item2)
-
-item3 = PizzaCheese.objects.all()
-cheese = tuple((item.cheese, item.cheese) for item in item3)
-
-item4 = PizzaCrust.objects.all()
-crust = tuple((item.crust, item.crust) for item in item4)
-
 class Pizza(models.Model):
 
     author =   models.ForeignKey(User, on_delete=models.CASCADE)
-    size =     models.CharField (max_length=20, choices=sizes,  default='large')
-    crust =    models.CharField (max_length=20, choices=crust,  default='Regular')
-    sauce =    models.CharField (max_length=20, choices=sauce,  default='Tomato')
-    cheese =   models.CharField (max_length=20, choices=cheese, default='Mozzarella')
+    size =     models.ForeignKey(PizzaSizes, on_delete=models.CASCADE)
+    crust =    models.ForeignKey(PizzaCrust, on_delete=models.CASCADE)
+    sauce =    models.ForeignKey(PizzaSauce, on_delete=models.CASCADE)
+    cheese =  models.ForeignKey(PizzaCheese, on_delete=models.CASCADE)
     toppings = models.ManyToManyField(PizzaToppings)
     date =     models.DateTimeField(auto_now_add=True, blank=True)
 

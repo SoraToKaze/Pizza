@@ -52,4 +52,3 @@ class DeliveryForm(forms.Form):
                 'max': 999,
             }),
         }
-
