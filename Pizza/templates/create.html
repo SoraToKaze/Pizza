@@ -1,9 +1,31 @@
+{% extends 'base.html' %}
 
-        </form>
-
+{% block content %}
+<h1>Create a new order</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.size.id_for_label }}">Size</label>
+        {{ form.size }}
     </div>
-</div>
-{% endblock %}
-</body>
+    <div class="form-group">
+        <label for="{{ form.crust.id_for_label }}">Crust</label>
+        {{ form.crust }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.sauce.id_for_label }}">Sauce</label>
+        {{ form.sauce }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.cheese.id_for_label }}">Cheese</label>
+        {{ form.cheese }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.toppings.id_for_label }}">Toppings</label>
+        {{ form.toppings }}
+    </div>
 
-</html>
+    Finished making your pizza? Delivery details here.
+    <button type="submit">Confirm Details</button>
+</form>
+{% endblock %}

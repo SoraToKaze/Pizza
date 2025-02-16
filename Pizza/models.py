@@ -4,18 +4,28 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator, Regex
 
 class PizzaSizes(models.Model):
     size = models.CharField(max_length=20)
+    def __str__(self):
+        return self.size
 
 class PizzaSauce(models.Model):
     sauce = models.CharField(max_length=20)
+    def __str__(self):
+        return self.sauce
 
 class PizzaCheese(models.Model):
     cheese = models.CharField(max_length=20)
+    def __str__(self):
+        return self.cheese
 
 class PizzaToppings(models.Model):
     top = models.CharField(max_length=30)
-
+    def __str__(self):
+        return self.top
+    
 class PizzaCrust(models.Model):
     crust = models.CharField(max_length=20)
+    def __str__(self):
+        return self.crust
 
 class Pizza(models.Model):
 
@@ -24,7 +34,7 @@ class Pizza(models.Model):
     crust =    models.ForeignKey(PizzaCrust, on_delete=models.CASCADE)
     sauce =    models.ForeignKey(PizzaSauce, on_delete=models.CASCADE)
     cheese =  models.ForeignKey(PizzaCheese, on_delete=models.CASCADE)
-    toppings = models.ManyToManyField(PizzaToppings)
+    toppings = models.ManyToManyField(PizzaToppings, blank=True)
     date =     models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):

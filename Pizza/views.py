@@ -42,7 +42,7 @@ def logout_view(request):
 
 @login_required(login_url='index')
 def history_orders(request):
-    orders = Delivery.objects.filter(author=request.user).select_related('pizza')
+    orders = Confirm_Order.objects.filter(user=request.user)
     return render(request, "history_orders.html", {'orders': orders})
 
 @login_required(login_url='index')
@@ -59,7 +59,7 @@ def create(request):
             return redirect('/delivery')
     else:
         form = PizzaForm()
-    return render(request, "/create.html", {'form':form})
+    return render(request, "create.html", {'form':form})
 
 @login_required(login_url='index')
 def delivery(request):
@@ -82,6 +82,7 @@ def delivery(request):
         form = DeliveryForm()
     return render(request, 'delivery.html', {'form': form})
 
+@login_required(login_url='index')
 def confirmation(request):
     latest_order = Confirm_Order.objects.filter(user=request.user).latest('created_at')
     return render(request, 'confirmation.html', {'order': latest_order})
