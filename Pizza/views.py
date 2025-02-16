@@ -5,7 +5,7 @@ from django.contrib                 import messages
 from .models                        import *
 from .forms                         import *
 from django.contrib.auth.forms      import AuthenticationForm
-from django.contrib.auth.views      import LoginView
+
 def index(request):
     return render(request, 'index.html')
 
@@ -25,16 +25,16 @@ class UserLoginForm(AuthenticationForm):  # Add this class
 
 def login_view(request):
     if request.method == 'POST':
-        form = UserLoginForm(request, data=request.POST)
+        form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('/')
     else:
-        form = UserLoginForm()
+        form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
 def logout_view(request):

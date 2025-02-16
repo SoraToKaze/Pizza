@@ -5,7 +5,6 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator, Regex
 class PizzaSizes(models.Model):
     size = models.CharField(max_length=20)
 
-        
 class PizzaSauce(models.Model):
     sauce = models.CharField(max_length=20)
 
@@ -14,10 +13,10 @@ class PizzaCheese(models.Model):
 
 class PizzaToppings(models.Model):
     top = models.CharField(max_length=30)
-    
+
 class PizzaCrust(models.Model):
     crust = models.CharField(max_length=20)
-    
+
 class Pizza(models.Model):
 
     author =   models.ForeignKey(User, on_delete=models.CASCADE)
