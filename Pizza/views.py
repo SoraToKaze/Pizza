@@ -5,36 +5,38 @@ from django.contrib                 import messages
 from .models                        import *
 from .forms                         import *
 from django.contrib.auth.forms      import AuthenticationForm
+from django.contrib.auth.views      import LoginView
 def index(request):
     return render(request, 'index.html')
 
-def register(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
+def register(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
         
         if form.is_valid():
             form.save()
             return redirect("/login")
     else:
         form = RegisterForm()
-    return render(request, "register.html", {"form":form})
+    return render(response, "register.html", {"form":form})
 
-class UserLoginView(AuthenticationForm):
+
+class UserLoginForm(AuthenticationForm):  # Add this class
     pass
 
-def login(request):
-    if request.method == "POST":
-        form = UserLoginView(request.POST)
+def login_view(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/index')
+                return redirect('index')
     else:
-        form = UserLoginView()
-    return render(request, "login.html", {"form":form})
+        form = UserLoginForm()
+    return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
