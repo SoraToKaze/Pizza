@@ -20,7 +20,6 @@ def register(response):
         form = RegisterForm()
     return render(response, "register.html", {"form":form})
 
-
 class UserLoginForm(AuthenticationForm):  # Add this class
     pass
 
