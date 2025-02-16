@@ -81,3 +81,7 @@ def delivery(request):
     else:
         form = DeliveryForm()
     return render(request, 'delivery.html', {'form': form})
+
+def confirmation(request):
+    latest_order = Confirm_Order.objects.filter(user=request.user).latest('created_at')
+    return render(request, 'confirmation.html', {'order': latest_order})
