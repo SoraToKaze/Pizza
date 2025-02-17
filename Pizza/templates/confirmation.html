@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Order Confirmation</h1>
+    <h2>Your Order Summary:</h2>
+    {%for o in orders %}
+    {% for d in delivery %}
+        <strong><h6>Name: {{ d.name }}</h6></strong>
+        <strong><h6>Order Date: {{ o.date }}</h6></strong>
+        <strong><h6>Pizza: {{ o.size }}</h6></strong>
+        <strong><h6>Crust: {{ o.crust }}</h6></strong>
+        <strong><h6>Sauce: {{ o.sauce }}</h6></strong>
+        <strong><h6>Cheese: {{ o.cheese }}</h6></strong>
+        <strong><h6>Toppings: {{ o.top_list }}</h6></strong>
+    {% endfor %}
+    {% endfor %}
+    <p>Thank you for your order! Your pizza is on its way!</p>
+
+    <a href="{% url 'index' %}">Return to the homepage</a>
+        <br>
+    <a href="{% url 'create' %}">Order another pizza</a>
+        <br>
+    <a href="{% url 'history_orders' %}">Check your order history</a>
+{% endblock %}

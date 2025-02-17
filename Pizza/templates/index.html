@@ -1,28 +1,18 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 <div class="homepage">
     <div class="home_index">
-        <div>
-            <h1>HeHe Pizza</h1>
-            Pizza, done right
-
-            <br>
-        </div>
-        <div class="home_buttons">
-            <div>
-                {% if user.is_authenticated %}
-                <a href=>
-                {% else %}
-                {% endif %}
-            </div>
-        </div>
+        <h1>HeHe Pizza</h1>
+        <h2>Pizza, done right</h2>
+        <br>
+    </div>
         <div class="home_buttons">
             <div>
                 {% if user.is_authenticated %}
                 <div class="home_button">
                     <a href='/create'><button class="home_button">Order Now!</button></a>
+                    <a href='/history_orders'><button class="home_button">Past Orders</button></a>
                 </div>
                 {% else %}
                     <a href='/register'><button class="home_button">Create account</button></a>

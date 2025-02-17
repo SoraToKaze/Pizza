@@ -21,8 +21,13 @@ class CrustAdmin(admin.ModelAdmin):
 @admin.register(PizzaToppings)
 class ToppingsAdmin(admin.ModelAdmin):
     list_display = ('top', )
-
-"""
-@admin.register(Delivery)
+    
 @admin.register(Pizza)
-"""
+class PizzaAdmin(admin.ModelAdmin):
+    list_display = ('author', 'size', 'crust', 'sauce', 'cheese', 'top_list', 'date')
+    def top_list(self, obj):
+        return ", ".join([top.top for top in obj.toppings.all()])
+    
+@admin.register(Delivery)
+class DeliveryAdmin(admin.ModelAdmin):
+    list_display = ('author', 'name', 'address', 'cardNo', 'ExpiryMonth', 'ExpiryYear', 'cvv')

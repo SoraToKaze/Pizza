@@ -14,7 +14,7 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
- 
+
 class PizzaForm(forms.ModelForm):
     class Meta:
         model = Pizza
@@ -23,33 +23,7 @@ class PizzaForm(forms.ModelForm):
             'toppings' : forms.CheckboxSelectMultiple(), #allows user to pick more than one topping at a time
         }
         
-class DeliveryForm(forms.Form):
+class DeliveryForm(forms.ModelForm):
     class Meta:
         model = Delivery
-        fields = ['name', 'address', 'cardNo', 'expiryMonth', 'expYear', 'cvv']
-
-        widgets = {
-            'cardNo': forms.NumberInput(attrs={
-                'placeholder': 'XXXX-XXXX-XXXX-XXXX',
-                'minlength': 16,
-                'maxlength': 16,
-            }),
-
-            'expiryMonth': forms.NumberInput(attrs={
-                'placeholder': 'MM',
-                'min': 1,
-                'max': 12,
-            }),
-
-            'expYear': forms.NumberInput(attrs={
-                'placeholder': 'YY',
-                'min': 0,
-                'max': 99,
-            }),
-            
-            'cvv': forms.TextInput(attrs={
-                'placeholder': 'CVV',
-                'min': 0,
-                'max': 999,
-            }),
-        }
+        fields = ['name', 'address', 'cardNo', 'ExpiryMonth', 'ExpiryYear', 'cvv']

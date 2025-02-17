@@ -6,12 +6,10 @@ class PizzaSizes(models.Model):
     size = models.CharField(max_length=20)
     def __str__(self):
         return self.size
-
 class PizzaSauce(models.Model):
     sauce = models.CharField(max_length=20)
     def __str__(self):
         return self.sauce
-
 class PizzaCheese(models.Model):
     cheese = models.CharField(max_length=20)
     def __str__(self):
@@ -21,7 +19,6 @@ class PizzaToppings(models.Model):
     top = models.CharField(max_length=30)
     def __str__(self):
         return self.top
-    
 class PizzaCrust(models.Model):
     crust = models.CharField(max_length=20)
     def __str__(self):
@@ -29,7 +26,7 @@ class PizzaCrust(models.Model):
 
 class Pizza(models.Model):
 
-    author =   models.ForeignKey(User, on_delete=models.CASCADE)
+    author =   models.ForeignKey(User, on_delete=models.CASCADE, related_name='pizzas')
     size =     models.ForeignKey(PizzaSizes, on_delete=models.CASCADE)
     crust =    models.ForeignKey(PizzaCrust, on_delete=models.CASCADE)
     sauce =    models.ForeignKey(PizzaSauce, on_delete=models.CASCADE)
@@ -38,14 +35,17 @@ class Pizza(models.Model):
     date =     models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
-        
-        return f"{self.size} pizza with {self.crust} crust, {self.sauce} sauce, {self.cheese} cheese, and{self.toppings} at {self.date.strftime('%Y-%m-%d')}"
+        top_list= ", ".join([top.top for top in self.toppings.all()])
+        if top_list == "":
+            return f"{self.size} pizza with {self.crust} crust, {self.sauce} sauce, {self.cheese} cheese at {self.date.strftime('%Y-%m-%d')}"
+        else:
+            return f"{self.size} pizza with {self.crust} crust, {self.sauce} sauce, {self.cheese} cheese, with {top_list} at {self.date.strftime('%Y-%m-%d')}"
+
 MONTH_CHOICES = tuple((month, month) for month in range(1, 12))
 YEAR_CHOICES = tuple((year, year) for year in range(2025, 2050))
 
 class Delivery(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    pizza = models.OneToOneField('Pizza', on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
     cardNo = models.CharField(max_length=16, 
@@ -56,8 +56,8 @@ class Delivery(models.Model):
             ],
         help_text="Enter 16 digit card number. No spaces!"
     )
-    expiryMonth = models.IntegerField(choices=MONTH_CHOICES, default=1)
-    eYear = models.IntegerField(choices=YEAR_CHOICES, default=2025)
+    ExpiryMonth = models.IntegerField(choices=MONTH_CHOICES, default=1)
+    ExpiryYear = models.IntegerField(choices=YEAR_CHOICES, default=2025)
     cvv = models.CharField(
         max_length=3,
         validators=[
@@ -72,10 +72,10 @@ class Delivery(models.Model):
 
 
 class Confirm_Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    delivery = models.ForeignKey(Delivery, on_delete=models.CASCADE)
-    create_time = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name='orders')
+    delivery = models.ForeignKey(Delivery, on_delete=models.CASCADE, related_name='orders')
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return f"Order #{self.id} by {self.user.username}"

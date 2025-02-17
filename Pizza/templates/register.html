@@ -14,7 +14,7 @@
     <h2>Register</h2>
     <form class="form-with-validation" action="{% url 'register' %}" method="POST">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
     <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
